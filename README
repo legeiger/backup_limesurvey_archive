@@ -1,0 +1,25 @@
+## Backup Docker Container for Limesurvey
+This is a simple docker container which offers an easy way to export lsa archives from Limesurvey to a folder of your choice.
+## Usage
+
+You only need to specify hostname, username and password. All surveys will be exported in the mounted folder /data. 
+
+    docker run --rm -it -v /folder/to/backup:/data \
+    -e LS_URL="" \
+    -e username="" \
+    -e password="" ghcr.io/legeiger/backup_limesurvey_archive:v2
+
+
+
+### push new image
+https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
+
+    docker build -t backup_limesurvey_archive:v3 .
+
+    echo $PAT | docker login ghcr.io --username legeiger --password-stdin
+
+    docker tag backup_limesurvey_archive:v3  ghcr.io/legeiger/backup_limesurvey_archive:v3
+
+    docker push ghcr.io/legeiger/backup_limesurvey_archive:v3
+
+

@@ -5,10 +5,12 @@ This is a simple docker container which offers an easy way to export lsa archive
 You only need to specify hostname, username and password. All surveys will be exported in the mounted folder /data. 
 
     docker run --rm -it -v /folder/to/backup:/data \
+    -e timestamp="" \    
     -e LS_URL="" \
     -e username="" \
     -e password="" ghcr.io/legeiger/backup_limesurvey_archive:v2
 
+timestmap should be string containing current date and time like `2022-03-01_12:03:34`.
 LS URL should be the whole FQDN of the server with leading https:// like `https://account.limesurvey.org/de/`.
 
 

@@ -2,7 +2,7 @@
 import httpx
 from urllib.parse import unquote
 from bs4 import BeautifulSoup
-from datetime import datetime
+# from datetime import datetime
 import os
 
 ## This will throw an error if not set
@@ -10,9 +10,10 @@ import os
 host = os.environ['LS_URL']
 username = os.environ['username']
 password = os.environ['password']
+date_time = os.environ['timestamp']
 
-now = datetime.now() # current date and time
-date_time = now.strftime("%Y_%m_%d_%H_%M_%S")
+# now = datetime.now() # current date and time
+# date_time = now.strftime("%Y_%m_%d_%H_%M_%S")
 
 #default to data path for saving → we defined this inside docker as well
 file_save_path = r'/data/'

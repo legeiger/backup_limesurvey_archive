@@ -66,7 +66,7 @@ with httpx.Client() as client:
         dl_url  = host + "/index.php/admin/export/sa/survey/action/exportarchive/surveyid/{id}".format(id=id)
         r = client.get(dl_url, headers=headers)
         # Save file data to local copy survey_archive_819872.lsa
-        with open(file_save_path + date_time + "survey_archive_" + str(id) + ".lsa", 'wb') as file:
+        with open(file_save_path + date_time + "_survey_archive_" + str(id) + ".lsa", 'wb') as file:
             for chunk in r.iter_bytes(1024):
                 file.write(chunk)
 

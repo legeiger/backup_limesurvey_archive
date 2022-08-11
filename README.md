@@ -10,7 +10,6 @@ You only need to specify hostname, username and password. All surveys will be ex
     -e password="" ghcr.io/legeiger/backup_limesurvey_archive:v2
 
 
-
 ### push new image
 https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
 

@@ -49,10 +49,11 @@ with httpx.Client() as client:
     "login_submit": "login"
     }
     r = client.post(url, data=form_data, headers=headers)
-    PHPSESSID = unquote(r.cookies['PHPSESSID'])
     print(r, r.status_code, r.cookies, r.headers)
     url = host +  r'/index.php/admin/survey/sa/listsurveys'
-    r = client.get(url, headers=headers)
+    # ?ajax=survey-grid&pageSize=5&YII_CSRF_TOKEN=...
+    params={"ajax": "survey-grid", "pageSize": 100, "YII_CSRF_TOKEN": TOKEN}
+    r = client.get(url, headers=headers, params=params)
     print(r, r.status_code, r.cookies, r.headers)
     soup = BeautifulSoup(r.text, "html.parser")
     data = soup.find('table', class_="table-striped table").findAll('td', class_="hidden-xs has-link")
@@ -62,6 +63,9 @@ with httpx.Client() as client:
             surveys.append(int(d.text))
         except ValueError:
             pass
+    print("\n")
+    print(surveys)
+    print("\n")
     for id in surveys:
         dl_url  = host + "/index.php/admin/export/sa/survey/action/exportarchive/surveyid/{id}".format(id=id)
         r = client.get(dl_url, headers=headers)

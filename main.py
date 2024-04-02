@@ -2,7 +2,7 @@
 import httpx
 from urllib.parse import unquote
 from bs4 import BeautifulSoup
-# from datetime import datetime
+from datetime import datetime
 import os
 
 ## This will throw an error if not set
@@ -40,7 +40,6 @@ with httpx.Client() as client:
     # print(r.cookies)
     form_data = {
     "YII_CSRF_TOKEN": TOKEN,
-    "PHPSESSID": PHPSESSID,
     "authMethod": "Authdb",
     "user": username,
     "password": password,
@@ -48,16 +47,27 @@ with httpx.Client() as client:
     "action": "login",
     "width": "1825",
     "login_submit": "login"
-    }
+}
+    # form_data = {
+    # "YII_CSRF_TOKEN": TOKEN,
+    # "PHPSESSID": PHPSESSID,
+    # "authMethod": "Authdb",
+    # "user": username,
+    # "password": password,
+    # "loginlang": "default",
+    # "action": "login",
+    # "width": "1825",
+    # "login_submit": "login"
+    # }
     r = client.post(url, data=form_data, headers=headers)
     print(r, r.status_code, r.cookies, r.headers)
-    url = host +  r'/index.php/admin/survey/sa/listsurveys'
-    # ?ajax=survey-grid&pageSize=5&YII_CSRF_TOKEN=...
-    params={"ajax": "survey-grid", "pageSize": 100, "YII_CSRF_TOKEN": TOKEN}
+    url = host +  r'/index.php/surveyAdministration/listsurveys'
+    # ?ajax=survey-grid&pageSize=100
+    params={"ajax": "survey-grid", "pageSize": 100}
     r = client.get(url, headers=headers, params=params)
     print(r, r.status_code, r.cookies, r.headers)
     soup = BeautifulSoup(r.text, "html.parser")
-    data = soup.find('table', class_="table-striped table").findAll('td', class_="hidden-xs has-link")
+    data = soup.find('table', class_="items table table-hover table table-hover").findAll('td', class_="d-none d-sm-table-cell has-link")
     surveys = []
     for d in data:
         try:
@@ -68,11 +78,13 @@ with httpx.Client() as client:
     print(surveys)
     print("\n")
     for id in surveys:
-        dl_url  = host + "/index.php/admin/export/sa/survey/action/exportarchive/surveyid/{id}".format(id=id)
-        r = client.get(dl_url, headers=headers)
-        # Save file data to local copy survey_archive_819872.lsa
-        with open(file_save_path + date_time + "_survey_archive_" + str(id) + ".lsa", 'wb') as file:
-            for chunk in r.iter_bytes(1024):
-                file.write(chunk)
+        for archivetype in ["exportarchive", "exportstructurexml"]:
+            extension = ".lsa" if archivetype == "exportarchive" else ".lss"
+            dl_url  = host + f"/index.php/admin/export/sa/survey/action/{archivetype}/surveyid/{id}"
+            r = client.get(dl_url, headers=headers)
+            # Save file data to local copy survey_archive_819872.lsa
+            with open(file_save_path + date_time + "_survey_archive_" + str(id) + extension, 'wb') as file:
+                for chunk in r.iter_bytes(1024):
+                    file.write(chunk)
 
 

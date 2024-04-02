@@ -19,7 +19,7 @@ https://docs.github.com/en/packages/working-with-a-github-packages-registry/work
 
     docker build -t backup_limesurvey_archive:v3 .
 
-    echo $PAT | docker login ghcr.io --username legeiger --password-stdin
+    docker login ghcr.io --username legeiger --password-stdin
 
     docker tag backup_limesurvey_archive:v3  ghcr.io/legeiger/backup_limesurvey_archive:v3
 

@@ -1,5 +1,9 @@
 ## Backup Docker Container for Limesurvey
-This is a simple docker container which offers an easy way to export lsa archives from Limesurvey to a folder of your choice.
+Simple docker container which offers an easy way to export lsa and lss archives from Limesurvey to a folder of your choice.
+I use it in compaion with cron and a backup script to export all surveys inside the limesurvey instance.
+
+Currently only Limesurvey >= 6.X are supported. 
+
 ## Usage
 
 You only need to specify hostname, username and password. All surveys will be exported in the mounted folder /data. 

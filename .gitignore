@@ -1,2 +1,5 @@
 *.lss 
 *.lsa
+*.env
+*.IPYNB
+*.ioynb

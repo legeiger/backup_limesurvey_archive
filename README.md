@@ -16,13 +16,16 @@ LS URL should be the whole FQDN of the server with leading https:// like `https:
 
 ### push new image
 https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
+Personal access token is necessary to push to github. https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
+
+Generate one here: https://github.com/settings/tokens
 
     docker build -t backup_limesurvey_archive:v3 .
 
     docker login ghcr.io --username legeiger --password-stdin
 
-    docker tag backup_limesurvey_archive:v3  ghcr.io/legeiger/backup_limesurvey_archive:v3
+    docker tag backup_limesurvey_archive:v4  ghcr.io/legeiger/backup_limesurvey_archive:v4
 
-    docker push ghcr.io/legeiger/backup_limesurvey_archive:v3
+    docker push ghcr.io/legeiger/backup_limesurvey_archive:v4
 
 
